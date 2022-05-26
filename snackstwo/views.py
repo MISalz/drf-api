@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Snack
 from .serializers import SnacksSerializer
+from .models import Snack
 
 # Create your views here.
 
@@ -9,10 +9,10 @@ from .serializers import SnacksSerializer
 #   serializer_class= SnacksSerializer  
 
 class SnackList(generics.ListCreateAPIView):
-  queryset= Snack.objects.all()
-  serializer_class= SnacksSerializer  
+  queryset = Snack.objects.all()
+  serializer_class = SnacksSerializer  
 
-class SnackDetail(generics.RetrieveAPIView):
-  queryset= Snack.objects.all()
-  serializer_class= SnacksSerializer  
+class SnackDetail(generics.RetrieveUpdateDestroyAPIView):
+  queryset = Snack.objects.all()
+  serializer_class = SnacksSerializer  
 
