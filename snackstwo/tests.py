@@ -2,9 +2,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-
 from .models import Snack
-
 
 class SnackTests(APITestCase):
     @classmethod
@@ -33,7 +31,7 @@ class SnackTests(APITestCase):
         )
 
     def test_get_snack_list(self):
-        url = reverse("snack_list")
+        url = reverse("snacks_two")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         snacks = response.data
@@ -41,14 +39,14 @@ class SnackTests(APITestCase):
         self.assertEqual(snacks[0]["name"], "rake")
 
     def test_get_snack_by_id(self):
-        url = reverse("snack_detail", args=(1,))
+        url = reverse("snacks_detail", args=(1,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         snack = response.data
         self.assertEqual(snack["name"], "rake")
 
     def test_create_snack(self):
-        url = reverse("snack_list")
+        url = reverse("snacks_two")
         data = {"owner": 1, "name": "spoon", "description": "good for cereal and soup"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -57,7 +55,7 @@ class SnackTests(APITestCase):
         self.assertEqual(Snack.objects.get(id=2).name, "spoon")
 
     def test_update_snack(self):
-        url = reverse("snack_detail", args=(1,))
+        url = reverse("snacks_detail", args=(1,))
         data = {
             "owner": 1,
             "name": "rake",
@@ -71,7 +69,7 @@ class SnackTests(APITestCase):
         self.assertEqual(snack.description, data["description"])
 
     def test_delete_snack(self):
-        url = reverse("snack_detail", args=(1,))
+        url = reverse("snacks_detail", args=(1,))
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         snacks = Snack.objects.all()
